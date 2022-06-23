@@ -1,5 +1,20 @@
-<script>
-  import "$lib/global.css";
+<script context="module" lang="ts">
+  export async function load() {
+    initFirebase();
+    return { props: {} };
+  }
+</script>
+
+<script lang="ts">
+  import '$lib/global.css';
+  import { initFirebase } from '$lib/firebase';
+  import { isLoggedIn } from '$lib/stores/authStore';
+
+  let loggedIn: boolean;
+
+  isLoggedIn.subscribe((value) => {
+    loggedIn = value;
+  });
 </script>
 
 <div class="background" />
@@ -8,7 +23,11 @@
   <div class="links">
     <a href="/packs">Resource Packs</a>
     <a href="/upload">Upload</a>
-    <a href="/login" class="login">Login</a>
+    {#if loggedIn}
+      <a href="/profile" class="login">Profile</a>
+    {:else}
+      <a href="/login" class="login">Login</a>
+    {/if}
   </div>
 </nav>
 

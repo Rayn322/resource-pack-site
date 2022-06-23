@@ -1,12 +1,12 @@
 <script lang="ts">
-  let text = "Select a resource pack";
+  let text = 'Select a resource pack';
   let files: FileList | null;
 
   function onSubmit(event: SubmitEvent) {
     if (files && files.length > 0) {
-      console.log("submitted");
+      console.log('submitted');
     } else {
-      console.log("no files");
+      console.log('no files');
     }
   }
 
@@ -15,7 +15,7 @@
       const file = files[0];
       text = file.name;
     } else {
-      text = "Select a resource pack";
+      text = 'Select a resource pack';
     }
   }
 </script>

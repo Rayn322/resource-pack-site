@@ -1,5 +1,5 @@
 <script>
-  import PackCard from "$lib/components/PackCard.svelte";
+  import PackCard from '$lib/components/PackCard.svelte';
 </script>
 
 <main>

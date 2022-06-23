@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 * {
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
   color: var(--font-color);
 }
 
@@ -74,7 +74,7 @@ body {
   margin: 0;
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 575px) {
   :root {
     font-size: 0.75rem;
   }
