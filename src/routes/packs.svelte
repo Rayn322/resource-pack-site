@@ -11,84 +11,93 @@
     />
 
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
+
     <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
-    />
-    <PackCard
-      name="Fart Blocks"
-      author="Devin"
-      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/Dirt_JE2_BE2.png"
+      name="Awesome Blocks"
+      author="Ryan"
+      image="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Block_of_Amethyst_JE3_BE1.png"
     />
   </div>
 </main>
