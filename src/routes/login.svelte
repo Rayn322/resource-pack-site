@@ -1,32 +1,29 @@
 <script lang="ts">
-  import { signIn, signOut } from '$lib/firebase';
-  import { currentUser, isLoggedIn } from '$lib/stores/authStore';
-  import type { User } from 'firebase/auth';
+  import { goto } from '$app/navigation';
+  import { signIn } from '$lib/firebase';
+  import { isLoggedIn } from '$lib/stores/authStore';
   import { onDestroy } from 'svelte';
+  import { get } from 'svelte/store';
 
   let loggedIn: boolean;
-  let user: User | null;
 
   const unsubLogIn = isLoggedIn.subscribe((value) => {
     loggedIn = value;
   });
 
-  const unsubUser = currentUser.subscribe((value) => {
-    user = value;
-  });
-
   onDestroy(unsubLogIn);
-  onDestroy(unsubUser);
+
+  // probably a better way but if i call get(isLoggedIn) too soon it returns false anyways
+  setTimeout(() => {
+    if (get(isLoggedIn)) {
+      goto('/profile');
+    }
+  }, 200);
 </script>
 
 <main>
   <div>
-    {#if loggedIn}
-      <h1>Welcome {user?.displayName}</h1>
-      <button on:click={signOut}>Sign out</button>
-    {:else}
-      <button on:click={signIn}>Login with Google</button>
-    {/if}
+    <button on:click={signIn}>Login with Google</button>
   </div>
 </main>
 

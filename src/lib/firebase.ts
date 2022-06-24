@@ -34,7 +34,6 @@ export function initFirebase() {
   onAuthStateChanged(auth, (user) => {
     isLoggedIn.set(user !== null);
     currentUser.set(user);
-    console.log(user);
   });
 }
 
