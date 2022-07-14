@@ -2,16 +2,17 @@
   import { processZip } from '$lib/processFiles';
 
   let text = 'Select a resource pack';
-  let files: FileList | null;
+  let packList: FileList | null;
   let confirmed = false;
   let name: string;
   let description: string;
   let imageBase64: string;
+  let imageList: FileList | null;
 
   // TODO: detect when submitted file isn't a resource pack
   async function onPackSubmit() {
-    if (files && files.length > 0) {
-      ({ name, description, imageBase64 } = await processZip(files[0]));
+    if (packList && packList.length > 0) {
+      ({ name, description, imageBase64 } = await processZip(packList[0]));
       confirmed = true;
     }
   }
@@ -23,12 +24,27 @@
   }
 
   function onFileSelect() {
-    if (files && files?.length > 0) {
-      const file = files[0];
+    if (packList && packList?.length > 0) {
+      const file = packList[0];
       text = file.name;
     } else {
       text = 'Select a resource pack';
     }
+  }
+
+  function onImageSelect() {
+    const image = imageList?.item(0);
+
+    if (image == null) {
+      imageBase64 = '';
+      return;
+    }
+
+    let reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = () => {
+      imageBase64 = reader.result as string;
+    };
   }
 </script>
 
@@ -50,7 +66,23 @@
           bind:value={description}
         />
 
-        <img src={imageBase64} alt={name} />
+        {#if imageBase64 != ''}
+          <img src={imageBase64} alt={name} />
+          <label for="image" class="file-upload">Change Image</label>
+        {:else}
+          <label for="image" class="file-upload">Upload Image</label>
+        {/if}
+
+        <input
+          type="file"
+          name="image"
+          id="image"
+          class="file button"
+          alt={name}
+          accept=".png"
+          bind:files={imageList}
+          on:change={onImageSelect}
+        />
 
         <input class="submit upload" type="submit" value="Upload" />
         <button class="cancel" on:click={() => (confirmed = false)}>Cancel</button>
@@ -58,9 +90,9 @@
     {:else}
       <form class="card" on:submit|preventDefault={onPackSubmit}>
         <h2 class="title">Upload a Resource Pack</h2>
-        <label for="pack" class="pack-label">{text}</label>
+        <label for="pack" class="file-upload">{text}</label>
         <input
-          bind:files
+          bind:files={packList}
           on:change={onFileSelect}
           class="file button"
           type="file"
@@ -118,7 +150,7 @@
     display: none;
   }
 
-  .pack-label {
+  .file-upload {
     font-size: 1em;
     cursor: pointer;
     padding: 0.3em 0.4em;
