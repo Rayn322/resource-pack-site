@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { signOut } from '$lib/firebase';
+  import { signOut } from '$lib/firebase/firebase';
   import { currentUser } from '$lib/stores/authStore';
   import type { User } from 'firebase/auth';
   import { onDestroy } from 'svelte';

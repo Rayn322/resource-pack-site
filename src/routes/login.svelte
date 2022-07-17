@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { signIn } from '$lib/firebase';
+  import { signIn } from '$lib/firebase/firebase';
   import { isLoggedIn } from '$lib/stores/authStore';
   import { onDestroy } from 'svelte';
   import { get } from 'svelte/store';

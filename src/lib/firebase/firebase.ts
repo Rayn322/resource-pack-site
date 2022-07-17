@@ -9,10 +9,12 @@ import {
   signInWithPopup,
   type Auth
 } from 'firebase/auth';
-import { currentUser, isLoggedIn } from './stores/authStore';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
+import { currentUser, isLoggedIn } from '../stores/authStore';
 
 let app: FirebaseApp;
 let auth: Auth;
+export let storage: FirebaseStorage;
 let provider: GoogleAuthProvider;
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -27,6 +29,7 @@ const firebaseConfig = {
 export function initFirebase() {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
+  storage = getStorage(app);
   provider = new GoogleAuthProvider();
   isLoggedIn.set(auth.currentUser !== null);
   setPersistence(auth, browserLocalPersistence);

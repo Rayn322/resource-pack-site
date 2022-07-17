@@ -7,7 +7,7 @@
 
 <script lang="ts">
   import '$lib/global.css';
-  import { initFirebase } from '$lib/firebase';
+  import { initFirebase } from '$lib/firebase/firebase';
   import { isLoggedIn } from '$lib/stores/authStore';
 
   let loggedIn: boolean;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { processZip } from '$lib/processFiles';
+  import { processZip } from '$lib/util/processFiles';
 
   let text = 'Select a resource pack';
   let packList: FileList | null;
