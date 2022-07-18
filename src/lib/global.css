@@ -1,81 +1,81 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 * {
-  font-family: 'Quicksand', sans-serif;
-  color: var(--font-color);
+	font-family: 'Quicksand', sans-serif;
+	color: var(--font-color);
 }
 
 /* Color Theme Swatches in Hex */
 .Aqua-Aquotic-1-hex {
-  color: #17e68a;
+	color: #17e68a;
 }
 .Aqua-Aquotic-2-hex {
-  color: #4dffb3;
+	color: #4dffb3;
 }
 .Aqua-Aquotic-3-hex {
-  color: #80ffcc;
+	color: #80ffcc;
 }
 .Aqua-Aquotic-4-hex {
-  color: #b3ffe6;
+	color: #b3ffe6;
 }
 .Aqua-Aquotic-5-hex {
-  color: #ccffff;
+	color: #ccffff;
 }
 
 /* Color Theme Swatches in Hex */
 .Aqua-Zoo-32-1-hex {
-  color: #434bb5;
+	color: #434bb5;
 }
 .Aqua-Zoo-32-2-hex {
-  color: #4674bf;
+	color: #4674bf;
 }
 .Aqua-Zoo-32-3-hex {
-  color: #4689a8;
+	color: #4689a8;
 }
 .Aqua-Zoo-32-4-hex {
-  color: #56bebf;
+	color: #56bebf;
 }
 .Aqua-Zoo-32-5-hex {
-  color: #17b583;
+	color: #17b583;
 }
 
 /* Color Theme Swatches in Hex */
 .Brand-Colors-Aquas-1-hex {
-  color: #324445;
+	color: #324445;
 }
 .Brand-Colors-Aquas-2-hex {
-  color: #618485;
+	color: #618485;
 }
 .Brand-Colors-Aquas-3-hex {
-  color: #8fc6c7;
+	color: #8fc6c7;
 }
 .Brand-Colors-Aquas-4-hex {
-  color: #d9ebed;
+	color: #d9ebed;
 }
 .Brand-Colors-Aquas-5-hex {
-  color: #ebfeff;
+	color: #ebfeff;
 }
 
 :root {
-  --font-color: black;
-  /* --nav-color: rgb(41, 46, 74); */
-  --nav-color: #00687d;
-  --nav-font-color: #edf6f9;
-  /* --bg-color: #ecedee; */
-  --bg-color: #edf6f9;
-  --card-color: #f2fcff;
-  --card-font-color: black;
-  --card-shadow-color: #0000004e;
-  --button-color: #36d3c4;
-  background-color: var(--bg-color);
+	--font-color: black;
+	/* --nav-color: rgb(41, 46, 74); */
+	--nav-color: #00687d;
+	--nav-font-color: #edf6f9;
+	/* --bg-color: #ecedee; */
+	--bg-color: #edf6f9;
+	--card-color: #f2fcff;
+	--card-font-color: black;
+	--card-shadow-color: #0000004e;
+	--button-color: #36d3c4;
+	background-color: var(--bg-color);
 }
 
 body {
-  margin: 0;
+	margin: 0;
 }
 
 @media only screen and (max-width: 575px) {
-  :root {
-    font-size: 0.75rem;
-  }
+	:root {
+		font-size: 0.75rem;
+	}
 }
