@@ -1,10 +1,3 @@
-<script context="module" lang="ts">
-	export async function load() {
-		initFirebase();
-		return { props: {} };
-	}
-</script>
-
 <script lang="ts">
 	import '$lib/global.css';
 	import { initFirebase } from '$lib/firebase/firebase';
