@@ -1,13 +1,6 @@
 <script lang="ts">
 	import '$lib/global.css';
-	import { initFirebase } from '$lib/firebase/firebase';
 	import { isLoggedIn } from '$lib/stores/authStore';
-
-	let loggedIn: boolean;
-
-	isLoggedIn.subscribe((value) => {
-		loggedIn = value;
-	});
 </script>
 
 <div class="background" />
@@ -16,7 +9,7 @@
 	<div class="links">
 		<a href="/packs">Resource Packs</a>
 		<a href="/upload">Upload</a>
-		{#if loggedIn}
+		{#if $isLoggedIn}
 			<a href="/profile" class="login">Profile</a>
 		{:else}
 			<a href="/login" class="login">Login</a>
