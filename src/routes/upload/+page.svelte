@@ -68,9 +68,9 @@
 
 				{#if imageBase64 != ''}
 					<img src={imageBase64} alt={name} />
-					<label for="image" class="file-upload">Change Image</label>
+					<label for="image" class="long-button img-button">Change Image</label>
 				{:else}
-					<label for="image" class="file-upload">Upload Image</label>
+					<label for="image" class="long-button">Upload Image</label>
 				{/if}
 
 				<input
@@ -90,7 +90,7 @@
 		{:else}
 			<form class="card" on:submit|preventDefault={onPackSubmit}>
 				<h2 class="title">Upload a Resource Pack</h2>
-				<label for="pack" class="file-upload">{text}</label>
+				<label for="pack" class="long-button">{text}</label>
 				<input
 					bind:files={packList}
 					on:change={onFileSelect}
@@ -150,7 +150,7 @@
 		display: none;
 	}
 
-	.file-upload {
+	.long-button {
 		font-size: 1em;
 		cursor: pointer;
 		padding: 0.3em 0.4em;
@@ -160,6 +160,10 @@
 		text-align: center;
 		overflow-wrap: break-word;
 		hyphens: auto;
+	}
+
+	.img-button {
+		margin-bottom: 2em;
 	}
 
 	.cancel {
