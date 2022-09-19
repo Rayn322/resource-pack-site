@@ -1,16 +1,6 @@
 <script lang="ts">
 	import { signOut } from '$lib/firebase/firebase';
 	import { currentUser } from '$lib/stores/authStore';
-	import type { User } from 'firebase/auth';
-	import { onDestroy } from 'svelte';
-
-	let user: User | null;
-
-	const unsubUser = currentUser.subscribe((value) => {
-		user = value;
-	});
-
-	onDestroy(unsubUser);
 </script>
 
 <main>
@@ -19,11 +9,11 @@
 			<h2 class="title">Profile</h2>
 			<div class="sidebyside">
 				<div>
-					<p class="details">{user?.displayName}</p>
-					<p class="details">{user?.email}</p>
+					<p class="details">{$currentUser?.displayName}</p>
+					<p class="details">{$currentUser?.email}</p>
 				</div>
 				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img src={user?.photoURL} alt="The users profile picture" />
+				<img src={$currentUser?.photoURL} alt="The users profile picture" />
 			</div>
 			<button on:click={signOut}>Sign out</button>
 		</div>
