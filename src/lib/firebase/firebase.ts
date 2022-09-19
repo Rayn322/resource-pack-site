@@ -1,5 +1,14 @@
 import { goto } from '$app/navigation';
-import { initializeApp, type FirebaseApp } from 'firebase/app';
+import {
+	PUBLIC_API_KEY,
+	PUBLIC_AUTH_DOMAIN,
+	PUBLIC_PROJECT_ID,
+	PUBLIC_STORAGE_BUCKET,
+	PUBLIC_MESSAGING_SENDER_ID,
+	PUBLIC_APP_ID,
+	PUBLIC_MEASUREMENT_ID
+} from '$env/static/public';
+import { initializeApp, type FirebaseApp, type FirebaseOptions } from 'firebase/app';
 import {
 	browserLocalPersistence,
 	getAuth,
@@ -10,20 +19,20 @@ import {
 	type Auth
 } from 'firebase/auth';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
-import { currentUser, isLoggedIn } from '../stores/authStore';
+import { currentUser, isLoggedIn } from '$lib/stores/authStore';
 
 let app: FirebaseApp;
 let auth: Auth;
-export let storage: FirebaseStorage;
 let provider: GoogleAuthProvider;
-const firebaseConfig = {
-	apiKey: import.meta.env.VITE_API_KEY,
-	authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-	projectId: import.meta.env.VITE_PROJECT_ID,
-	storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-	messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-	appId: import.meta.env.VITE_APP_ID,
-	measurementId: import.meta.env.VITE_MEASUREMENT_ID
+export let storage: FirebaseStorage;
+const firebaseConfig: FirebaseOptions = {
+	apiKey: PUBLIC_API_KEY,
+	authDomain: PUBLIC_AUTH_DOMAIN,
+	projectId: PUBLIC_PROJECT_ID,
+	storageBucket: PUBLIC_STORAGE_BUCKET,
+	messagingSenderId: PUBLIC_MESSAGING_SENDER_ID,
+	appId: PUBLIC_APP_ID,
+	measurementId: PUBLIC_MEASUREMENT_ID
 };
 
 export function initFirebase() {
