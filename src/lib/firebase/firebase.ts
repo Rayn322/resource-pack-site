@@ -54,3 +54,5 @@ export function signOut() {
 	auth.signOut();
 	goto('/');
 }
+
+initFirebase();
