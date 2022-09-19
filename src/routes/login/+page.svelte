@@ -2,23 +2,10 @@
 	import { goto } from '$app/navigation';
 	import { signIn } from '$lib/firebase/firebase';
 	import { isLoggedIn } from '$lib/stores/authStore';
-	import { onDestroy } from 'svelte';
-	import { get } from 'svelte/store';
 
-	let loggedIn: boolean;
-
-	const unsubLogIn = isLoggedIn.subscribe((value) => {
-		loggedIn = value;
-	});
-
-	onDestroy(unsubLogIn);
-
-	// probably a better way but if i call get(isLoggedIn) too soon it returns false anyways
-	setTimeout(() => {
-		if (get(isLoggedIn)) {
-			goto('/profile');
-		}
-	}, 200);
+	$: if ($isLoggedIn) {
+		goto('/profile');
+	}
 </script>
 
 <main>
