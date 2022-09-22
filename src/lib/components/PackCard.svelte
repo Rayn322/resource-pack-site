@@ -18,7 +18,7 @@
 		margin: 1em 0.25em;
 		margin-top: 0;
 		padding: 1em 2em;
-		box-shadow: 0.2em 0.2em 10px var(--card-shadow-color);
+		box-shadow: 0em 0.2em 10px var(--card-shadow-color);
 		border-radius: 10px;
 		/* border: 0.1em solid rgba(0, 0, 0, 0.287); */
 		/* background: var(--card-color);

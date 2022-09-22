@@ -117,7 +117,7 @@
 		flex-direction: column;
 		width: 20em;
 		padding: 2em 2em;
-		box-shadow: 0.2em 0.2em 10px var(--card-shadow-color);
+		box-shadow: 0em 0.2em 10px var(--card-shadow-color);
 		border-radius: 10px;
 		background-color: var(--card-color);
 	}
