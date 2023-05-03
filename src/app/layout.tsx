@@ -20,6 +20,8 @@ function SignInButton() {
 		<>
 			<SignedIn>
 				<UserButton
+					// doesn't show sign in button after signing out so just redirect for now
+					afterSignOutUrl="/"
 					appearance={{
 						elements: {
 							avatarBox: 'w-10 h-10',
