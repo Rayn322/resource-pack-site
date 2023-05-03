@@ -5,6 +5,9 @@ const nextConfig = {
 	experimental: {
 		appDir: true,
 	},
+	images: {
+		domains: ['static.wikia.nocookie.net'],
+	},
 };
 
 export default nextConfig;
