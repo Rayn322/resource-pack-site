@@ -1,13 +1,16 @@
 import Image from 'next/image';
+import packPng from '@/static/pack.png';
 
 export default function Card() {
 	return (
-		<div className="w-40 overflow-hidden rounded border border-black shadow">
+		<div className="flex w-96 overflow-hidden rounded border border-black p-2 shadow">
 			<Image
 				width={160}
 				height={160}
 				alt="Minecraft grass block"
-				src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/17/Grass_Block_%28graphics_fast%29_JE3.png/revision/latest?cb=20200831093828"
+				src={packPng}
+				placeholder="blur"
+				className="rounded shadow"
 			/>
 			<div className="p-4">
 				<h3 className="text-xl">Name</h3>
