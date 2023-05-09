@@ -1,9 +1,4 @@
-import {
-	ClerkProvider,
-	SignedIn,
-	SignedOut,
-	UserButton,
-} from '@clerk/nextjs/app-beta';
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import './globals.css';
