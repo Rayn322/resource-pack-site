@@ -7,18 +7,20 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 export async function uploadPack(formData: FormData) {
-	const { userId } = await auth();
+	const { userId } = auth();
 
 	if (!userId) {
-		return { error: 'You must be signed in to add an item to your cart' };
+		return { error: 'You must be signed in to upload a texture pack' };
 	}
 
 	const name = formData.get('name');
 	const description = formData.get('description');
+	const url = formData.get('url');
 
 	const stringSchema = z.string().nonempty();
 	const nameResult = stringSchema.safeParse(name);
 	const descriptionResult = stringSchema.safeParse(description);
+	const urlResult = z.string().url().nonempty().safeParse(url);
 
 	if (!nameResult.success) {
 		return { error: 'Name is required' };
@@ -28,10 +30,15 @@ export async function uploadPack(formData: FormData) {
 		return { error: 'Description is required' };
 	}
 
-	let query = await db.insert(packs).values({
+	if (!urlResult.success) {
+		return { error: 'File is required' };
+	}
+
+	const query = await db.insert(packs).values({
 		name: nameResult.data,
 		description: descriptionResult.data,
 		userId: userId,
+		downloadUrl: urlResult.data,
 	});
 
 	redirect(`/packs/${query.insertId}`);

@@ -1,29 +1,49 @@
 'use client';
 
 import type { uploadPackType } from '@/server/upload';
+import { uploadFiles } from '@/utils/uploadthing';
 import { useState } from 'react';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { experimental_useFormStatus } from 'react-dom';
 
 export default function UploadForm({
 	uploadPack,
 }: {
 	uploadPack: uploadPackType;
 }) {
-	const { pending } = useFormStatus();
 	const [error, setError] = useState<string | null>(null);
+	const { pending } = experimental_useFormStatus();
 
 	return (
 		<>
 			<form
 				action={async (formData) => {
-					let data = await uploadPack(formData);
-					if (data.error) {
-						setError(data.error);
+					/*
+						Consider using the useUploadThing hook instead of this and calling
+						the server action on onClientUploadComplete.
+						Also improves error handling.
+					*/
+					const file = formData.get('file') as File;
+					formData.delete('file');
+
+					if (!file) {
+						setError('No file selected');
 					} else {
-						setError(null);
+						const [res] = await uploadFiles({
+							files: [file],
+							endpoint: 'packUploader',
+						});
+
+						formData.append('url', res.fileUrl);
+
+						const data = await uploadPack(formData);
+						if (data.error) {
+							setError(data.error);
+						} else {
+							setError(null);
+						}
 					}
 				}}
-				className="flex flex-col gap-2 rounded border-2 border-black p-4 shadow"
+				className="flex flex-col gap-2 rounded border border-black p-4 shadow"
 			>
 				<div className="flex items-center justify-between gap-2">
 					<label htmlFor="name" className="w-full text-center">
@@ -37,9 +57,19 @@ export default function UploadForm({
 					</label>
 					<input type="text" name="description" className="rounded" />
 				</div>
+				{/* ugly for now whatever */}
+				<div className="flex items-center justify-between gap-2">
+					<input
+						type="file"
+						name="file"
+						accept=".zip"
+						className="rounded border border-gray-500 p-2 file:rounded file:border file:border-solid file:border-black file:bg-transparent"
+					/>
+				</div>
+
 				<button
 					type="submit"
-					className="rounded border-2 border-emerald-500 p-2"
+					className="rounded border-2 border-emerald-500 p-2 disabled:bg-gray-200"
 					disabled={pending}
 				>
 					Submit
