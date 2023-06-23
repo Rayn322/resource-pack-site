@@ -73,7 +73,9 @@ export default function RootLayout({
 							<SignInButton />
 						</div>
 					</div>
-					{children}
+					<main className="flex flex-col items-center justify-between gap-8 p-12">
+						{children}
+					</main>
 				</body>
 			</ClerkProvider>
 		</html>
