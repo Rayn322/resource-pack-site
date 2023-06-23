@@ -1,3 +1,4 @@
+import { InferModel } from 'drizzle-orm';
 import {
 	index,
 	mysqlTable,
@@ -20,3 +21,5 @@ export const packs = mysqlTable(
 		userIdIdx: index('user_id_idx').on(table.userId),
 	})
 );
+
+export type Pack = InferModel<typeof packs>;
