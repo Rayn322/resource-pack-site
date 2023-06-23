@@ -21,9 +21,7 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 	if (pack) {
 		try {
 			user = await clerkClient.users.getUser(pack.userId);
-		} catch (e) {
-			// fine for now
-		}
+		} catch (e) {}
 	}
 
 	return (
