@@ -13,8 +13,7 @@ export const packs = mysqlTable(
 		id: serial('id').primaryKey().autoincrement(),
 		name: varchar('name', { length: 256 }).notNull(),
 		description: text('description').notNull(),
-		// make downloadUrl not null eventually
-		downloadUrl: varchar('download_url', { length: 256 }),
+		downloadUrl: varchar('download_url', { length: 256 }).notNull(),
 		userId: varchar('user_id', { length: 256 }).notNull(),
 	},
 	(table) => ({
