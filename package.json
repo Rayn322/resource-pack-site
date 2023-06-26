@@ -10,11 +10,11 @@
 		"db:push": "drizzle-kit push:mysql"
 	},
 	"dependencies": {
-		"@clerk/nextjs": "^4.21.9",
+		"@clerk/nextjs": "^4.21.10",
 		"@planetscale/database": "^1.7.0",
-		"@t3-oss/env-nextjs": "^0.4.1",
-		"@types/node": "20.3.1",
-		"@types/react": "18.2.13",
+		"@t3-oss/env-nextjs": "^0.6.0",
+		"@types/node": "20.3.2",
+		"@types/react": "18.2.14",
 		"@types/react-dom": "18.2.6",
 		"@uploadthing/react": "^5.0.0",
 		"autoprefixer": "10.4.14",
@@ -35,7 +35,7 @@
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.5.3",
 		"dotenv": "^16.3.1",
-		"drizzle-kit": "0.19.1",
+		"drizzle-kit": "0.19.2",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.3.0"
 	}
