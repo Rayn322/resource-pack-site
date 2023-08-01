@@ -25,21 +25,30 @@ export default function UploadForm({
 					const file = formData.get('file') as File;
 					formData.delete('file');
 
-					if (!file) {
+					if (!file || file.size === 0) {
 						setError('No file selected');
+					} else if (
+						file.type !== 'application/zip' &&
+						file.type !== 'application/x-zip-compressed'
+					) {
+						setError('File must be a zip');
 					} else {
+						setError(null);
+
+						const newFile = new File([file], file.name, {
+							type: 'application/zip',
+						});
+
 						const [res] = await uploadFiles({
-							files: [file],
+							files: [newFile],
 							endpoint: 'packUploader',
 						});
 
 						formData.append('url', res.fileUrl);
-
 						const data = await uploadPack(formData);
+
 						if (data.error) {
 							setError(data.error);
-						} else {
-							setError(null);
 						}
 					}
 				}}
