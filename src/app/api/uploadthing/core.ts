@@ -6,7 +6,9 @@ const f = createUploadthing();
 // would it be bad if i just used upload thing input instead of the other call...
 export const ourFileRouter = {
 	packUploader: f({
-		'application/zip': { maxFileCount: 1, maxFileSize: '64MB' },
+		// since files are being uploaded as application/x-zip-compressed
+		// we can't use application/zip
+		blob: { maxFileCount: 1, maxFileSize: '64MB' },
 	})
 		.middleware(async () => {
 			const user = await currentUser();
