@@ -3,6 +3,7 @@ import packPng from '@/static/pack.png';
 import { clerkClient } from '@clerk/nextjs';
 import type { User } from '@clerk/nextjs/dist/types/server';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Card({ pack }: { pack: Pack }) {
 	let user: User | undefined;
@@ -12,7 +13,7 @@ export default async function Card({ pack }: { pack: Pack }) {
 	} catch {}
 
 	return (
-		<a href={`/packs/${pack.id}`}>
+		<Link href={`/packs/${pack.id}`}>
 			<div className="flex h-full w-96 gap-4 overflow-hidden rounded border border-black p-4 shadow">
 				<Image
 					width={120}
@@ -30,6 +31,6 @@ export default async function Card({ pack }: { pack: Pack }) {
 					{user && <p>Uploaded by {user.username}</p>}
 				</div>
 			</div>
-		</a>
+		</Link>
 	);
 }
