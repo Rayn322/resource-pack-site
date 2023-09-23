@@ -5,14 +5,14 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
 	request: Request,
-	context: { params: { id: string } }
+	context: { params: { id: string } },
 ) {
 	const id = parseInt(context.params.id);
 
 	if (isNaN(id)) {
 		return NextResponse.json(
 			{ error: 'Error parsing pack id' },
-			{ status: 400 }
+			{ status: 400 },
 		);
 	}
 

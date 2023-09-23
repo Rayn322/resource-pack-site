@@ -7,7 +7,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"db:push": "drizzle-kit push:mysql"
+		"db:push": "drizzle-kit push:mysql",
+		"format": "prettier --write **/*.{ts,tsx,css,mjs,json} --ignore-path .gitignore"
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^4.24.1",
