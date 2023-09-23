@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "ES6", // temp fix for drizzle
+		"target": "ESNext", // temp fix for drizzle
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
