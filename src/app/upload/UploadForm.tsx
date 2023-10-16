@@ -3,7 +3,7 @@
 import type { uploadPackType } from '@/server/upload';
 import { uploadFiles } from '@/utils/uploadthing';
 import { useState } from 'react';
-import { experimental_useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 
 export default function UploadForm({
 	uploadPack,
@@ -11,7 +11,7 @@ export default function UploadForm({
 	uploadPack: uploadPackType;
 }) {
 	const [error, setError] = useState<string | null>(null);
-	const { pending } = experimental_useFormStatus();
+	const { pending } = useFormStatus();
 
 	return (
 		<>
