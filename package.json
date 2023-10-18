@@ -9,6 +9,7 @@
 		"lint": "next lint",
 		"db:push": "dotenv -c -- drizzle-kit push:mysql",
 		"db:studio": "dotenv -c -- drizzle-kit studio",
+		"drizzle-kit": "dotenv -c -- drizzle-kit",
 		"format": "prettier --write **/*.{ts,tsx,css,mjs,json} --ignore-path .gitignore"
 	},
 	"dependencies": {
