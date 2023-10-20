@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import {
 	index,
 	mysqlTable,
@@ -16,8 +17,14 @@ export const packs = mysqlTable(
 		description: text('description').notNull(),
 		downloadUrl: varchar('download_url', { length: 256 }).notNull(),
 		userId: varchar('user_id', { length: 256 }).notNull(),
-		createdAt: timestamp('created_at').defaultNow().notNull(),
-		updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
+		// use defaultCurrentTimestamp() eventually https://github.com/drizzle-team/drizzle-orm/issues/921
+		createdAt: timestamp('created_at')
+			.default(sql`CURRENT_TIMESTAMP`)
+			.notNull(),
+		updatedAt: timestamp('updated_at')
+			.default(sql`CURRENT_TIMESTAMP`)
+			.onUpdateNow()
+			.notNull(),
 	},
 	(table) => ({
 		userIdIdx: index('user_id_idx').on(table.userId),
