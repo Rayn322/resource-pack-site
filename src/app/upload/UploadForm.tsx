@@ -22,35 +22,30 @@ export default function UploadForm({
 						the server action on onClientUploadComplete.
 						Also improves error handling.
 					*/
-					const file = formData.get('file') as File;
-					formData.delete('file');
-
-					if (!file || file.size === 0) {
-						setError('No file selected');
-					} else if (
-						file.type !== 'application/zip' &&
-						file.type !== 'application/x-zip-compressed'
-					) {
-						setError('File must be a zip');
-					} else {
-						setError(null);
-
-						const newFile = new File([file], file.name, {
-							type: 'application/zip',
-						});
-
-						const [res] = await uploadFiles({
-							files: [newFile],
-							endpoint: 'packUploader',
-						});
-
-						formData.append('url', res.fileUrl);
-						const data = await uploadPack(formData);
-
-						if (data.error) {
-							setError(data.error);
-						}
-					}
+					// const file = formData.get('file') as File;
+					// formData.delete('file');
+					// if (!file || file.size === 0) {
+					// 	setError('No file selected');
+					// } else if (
+					// 	file.type !== 'application/zip' &&
+					// 	file.type !== 'application/x-zip-compressed'
+					// ) {
+					// 	setError('File must be a zip');
+					// } else {
+					// 	setError(null);
+					// 	const newFile = new File([file], file.name, {
+					// 		type: 'application/zip',
+					// 	});
+					// 	const [res] = await uploadFiles({
+					// 		files: [newFile],
+					// 		endpoint: 'packUploader',
+					// 	});
+					// 	formData.append('url', res.url);
+					// 	const data = await uploadPack(formData);
+					// 	if (data.error) {
+					// 		setError(data.error);
+					// 	}
+					// }
 				}}
 				className="flex flex-col gap-2 rounded border border-black p-4 shadow"
 			>
