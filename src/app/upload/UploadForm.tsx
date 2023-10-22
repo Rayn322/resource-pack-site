@@ -1,29 +1,34 @@
 'use client';
 
-import type { uploadPackType } from '@/server/upload';
-import { uploadFiles } from '@/utils/uploadthing';
+import { useUploadThing } from '@/utils/uploadthing';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
-import { experimental_useFormStatus } from 'react-dom';
 
-export default function UploadForm({
-	uploadPack,
-}: {
-	uploadPack: uploadPackType;
-}) {
+export default function UploadForm() {
 	const [error, setError] = useState<string | null>(null);
-	const { pending } = experimental_useFormStatus();
+	const { isUploading, startUpload } = useUploadThing('packUploader', {
+		onUploadProgress(p) {
+			console.log(p);
+		},
+		onClientUploadComplete() {
+			redirect('/packs');
+		},
+		onUploadError(error) {
+			const fieldErrors = error.data?.zodError?.fieldErrors;
+
+			setError(
+				fieldErrors?.name?.at(0) ??
+					fieldErrors?.description?.at(0) ??
+					'Unknown error',
+			);
+		},
+	});
 
 	return (
 		<>
 			<form
 				action={async (formData) => {
-					/*
-						Consider using the useUploadThing hook instead of this and calling
-						the server action on onClientUploadComplete.
-						Also improves error handling.
-					*/
 					const file = formData.get('file') as File;
-					formData.delete('file');
 
 					if (!file || file.size === 0) {
 						setError('No file selected');
@@ -39,17 +44,10 @@ export default function UploadForm({
 							type: 'application/zip',
 						});
 
-						const [res] = await uploadFiles({
-							files: [newFile],
-							endpoint: 'packUploader',
+						await startUpload([newFile], {
+							name: formData.get('name') as string,
+							description: formData.get('description') as string,
 						});
-
-						formData.append('url', res.fileUrl);
-						const data = await uploadPack(formData);
-
-						if (data.error) {
-							setError(data.error);
-						}
 					}
 				}}
 				className="flex flex-col gap-2 rounded border border-black p-4 shadow"
@@ -79,7 +77,7 @@ export default function UploadForm({
 				<button
 					type="submit"
 					className="rounded border-2 border-emerald-500 p-2 disabled:bg-gray-200"
-					disabled={pending}
+					disabled={isUploading} // TODO: fix this (it's not working)
 				>
 					Submit
 				</button>

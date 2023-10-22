@@ -13,7 +13,7 @@ export default async function Card({ pack }: { pack: Pack }) {
 	} catch {}
 
 	return (
-		<Link href={`/packs/${pack.id}`}>
+		<Link prefetch={true} href={`/packs/${pack.id}`}>
 			<div className="flex h-full w-96 gap-4 overflow-hidden rounded border border-black p-4 shadow">
 				<Image
 					width={120}

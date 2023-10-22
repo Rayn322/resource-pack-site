@@ -1,24 +1,46 @@
+import { db } from '@/db/db';
+import { packs } from '@/db/schema';
 import { currentUser } from '@clerk/nextjs';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
+import { z } from 'zod';
 
-const f = createUploadthing();
+const f = createUploadthing({
+	errorFormatter: (err) => {
+		return {
+			message: err.message,
+			zodError: err.cause instanceof z.ZodError ? err.cause.flatten() : null,
+		};
+	},
+});
 
-// would it be bad if i just used upload thing input instead of the other call...
 export const ourFileRouter = {
 	packUploader: f({
 		'application/zip': { maxFileCount: 1, maxFileSize: '64MB' },
 	})
-		.middleware(async () => {
+		.input(
+			z.object({
+				name: z.string().nonempty('Must have a name'),
+				description: z.string().nonempty('Must have a description'),
+			}),
+		)
+		.middleware(async ({ input, req }) => {
 			const user = await currentUser();
 
-			if (!user) throw new Error('Unauthorized');
+			if (!user) {
+				throw new Error('You must be signed in to upload a texture pack');
+			}
 
-			return { userId: user.id };
+			return { userId: user.id, input };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
-			console.log('Upload complete for userId:', metadata.userId);
+			const query = await db.insert(packs).values({
+				name: metadata.input.name,
+				description: metadata.input.description,
+				userId: metadata.userId,
+				downloadUrl: file.url,
+			});
 
-			console.log('file url', file.url);
+			console.log('Created pack with id', query.insertId);
 		}),
 } satisfies FileRouter;
 

@@ -21,7 +21,7 @@ export const packs = mysqlTable(
 	},
 	(table) => ({
 		userIdIdx: index('user_id_idx').on(table.userId),
-	})
+	}),
 );
 
 export type Pack = InferModel<typeof packs>;
