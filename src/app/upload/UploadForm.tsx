@@ -5,9 +5,9 @@ import { useUploadThing } from '@/utils/uploadthing';
 import { useState } from 'react';
 
 export default function UploadForm({
-	uploadPack,
+	createPack,
 }: {
-	uploadPack: uploadPackType;
+	createPack: uploadPackType;
 }) {
 	const [error, setError] = useState<string | null>(null);
 	const { isUploading, startUpload } = useUploadThing('packUploader', {
@@ -17,6 +17,8 @@ export default function UploadForm({
 	});
 
 	const submitForm = async (formData: FormData) => {
+		const name = formData.get('name') as string;
+		const description = formData.get('description') as string;
 		const file = formData.get('file') as File;
 		formData.delete('file');
 
@@ -33,6 +35,12 @@ export default function UploadForm({
 				type: 'application/zip',
 			});
 
+			// TODO: use some zod schema here
+			if (!name || !description) {
+				setError('Name and description required');
+				return;
+			}
+
 			const res = await startUpload([newFile]);
 			const uploadData = res?.at(0);
 			if (!uploadData) {
@@ -40,9 +48,9 @@ export default function UploadForm({
 				return;
 			}
 
-			const { data, serverError, validationError } = await uploadPack({
-				name: formData.get('name') as string,
-				description: formData.get('description') as string,
+			const { data, serverError, validationError } = await createPack({
+				name,
+				description,
 				url: uploadData.url,
 			});
 

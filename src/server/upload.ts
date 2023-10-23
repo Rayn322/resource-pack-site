@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { action } from './safe-action';
 
-export const uploadPack = action(
+export const createPack = action(
 	z.object({
 		name: z.string().min(1),
 		description: z.string().min(1),
@@ -31,4 +31,4 @@ export const uploadPack = action(
 	},
 );
 
-export type uploadPackType = typeof uploadPack;
+export type uploadPackType = typeof createPack;
