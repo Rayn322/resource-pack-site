@@ -1,9 +1,8 @@
 'use client';
 
 import type { uploadPackType } from '@/server/upload';
-import { uploadFiles } from '@/utils/uploadthing';
+import { useUploadThing } from '@/utils/uploadthing';
 import { useState } from 'react';
-import { useFormStatus } from 'react-dom';
 
 export default function UploadForm({
 	uploadPack,
@@ -11,42 +10,56 @@ export default function UploadForm({
 	uploadPack: uploadPackType;
 }) {
 	const [error, setError] = useState<string | null>(null);
-	const { pending } = useFormStatus();
+	const { isUploading, startUpload } = useUploadThing('packUploader', {
+		onUploadProgress(p) {
+			console.log(p);
+		},
+	});
+
+	const submitForm = async (formData: FormData) => {
+		const file = formData.get('file') as File;
+		formData.delete('file');
+
+		if (!file || file.size === 0) {
+			setError('No file selected');
+		} else if (
+			file.type !== 'application/zip' &&
+			file.type !== 'application/x-zip-compressed'
+		) {
+			setError('File must be a zip');
+		} else {
+			setError(null);
+			const newFile = new File([file], file.name, {
+				type: 'application/zip',
+			});
+
+			const res = await startUpload([newFile]);
+			const uploadData = res?.at(0);
+			if (!uploadData) {
+				setError('Error uploading file');
+				return;
+			}
+
+			const { data, serverError, validationError } = await uploadPack({
+				name: formData.get('name') as string,
+				description: formData.get('description') as string,
+				url: uploadData.url,
+			});
+
+			if (data?.error) {
+				setError(data.error);
+			} else if (serverError) {
+				setError(serverError);
+			} else if (validationError) {
+				setError(JSON.stringify(validationError));
+			}
+		}
+	};
 
 	return (
 		<>
 			<form
-				action={async (formData) => {
-					/*
-						Consider using the useUploadThing hook instead of this and calling
-						the server action on onClientUploadComplete.
-						Also improves error handling.
-					*/
-					// const file = formData.get('file') as File;
-					// formData.delete('file');
-					// if (!file || file.size === 0) {
-					// 	setError('No file selected');
-					// } else if (
-					// 	file.type !== 'application/zip' &&
-					// 	file.type !== 'application/x-zip-compressed'
-					// ) {
-					// 	setError('File must be a zip');
-					// } else {
-					// 	setError(null);
-					// 	const newFile = new File([file], file.name, {
-					// 		type: 'application/zip',
-					// 	});
-					// 	const [res] = await uploadFiles({
-					// 		files: [newFile],
-					// 		endpoint: 'packUploader',
-					// 	});
-					// 	formData.append('url', res.url);
-					// 	const data = await uploadPack(formData);
-					// 	if (data.error) {
-					// 		setError(data.error);
-					// 	}
-					// }
-				}}
+				action={submitForm}
 				className="flex flex-col gap-2 rounded border border-black p-4 shadow"
 			>
 				<div className="flex items-center justify-between gap-2">
@@ -74,7 +87,6 @@ export default function UploadForm({
 				<button
 					type="submit"
 					className="rounded border-2 border-emerald-500 p-2 disabled:bg-gray-200"
-					disabled={pending}
 				>
 					Submit
 				</button>

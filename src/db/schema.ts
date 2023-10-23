@@ -8,7 +8,6 @@ import {
 	varchar,
 } from 'drizzle-orm/mysql-core';
 
-// TODO: figure out why this errors but still works sometimes idk
 export const packs = mysqlTable(
 	'packs',
 	{

@@ -1,9 +1,9 @@
 import { currentUser } from '@clerk/nextjs';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
+import { UTApi } from 'uploadthing/server';
 
 const f = createUploadthing();
 
-// would it be bad if i just used upload thing input instead of the other call...
 export const ourFileRouter = {
 	packUploader: f({
 		'application/zip': { maxFileCount: 1, maxFileSize: '64MB' },
@@ -21,5 +21,7 @@ export const ourFileRouter = {
 			console.log('file url', file.url);
 		}),
 } satisfies FileRouter;
+
+export const utapi = new UTApi();
 
 export type OurFileRouter = typeof ourFileRouter;
