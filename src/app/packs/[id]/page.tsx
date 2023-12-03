@@ -68,6 +68,7 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 								alt="profile"
 								width={64}
 								height={64}
+								priority
 							/>
 						</>
 					)}

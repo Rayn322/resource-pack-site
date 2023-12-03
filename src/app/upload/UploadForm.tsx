@@ -1,18 +1,23 @@
 'use client';
 
-import type { uploadPackType } from '@/server/upload';
 import { useUploadThing } from '@/utils/uploadthing';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function UploadForm({
-	createPack,
-}: {
-	createPack: uploadPackType;
-}) {
+export default function UploadForm() {
+	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
-	const { isUploading, startUpload } = useUploadThing('packUploader', {
+	const { startUpload } = useUploadThing('packUploader', {
 		onUploadProgress(p) {
 			console.log(p);
+		},
+		onClientUploadComplete([file]) {
+			if (!file) {
+				setError('Error uploading file');
+				return;
+			}
+
+			router.push(`/packs/${file.serverData.id}`);
 		},
 	});
 
@@ -41,26 +46,10 @@ export default function UploadForm({
 				return;
 			}
 
-			const res = await startUpload([newFile]);
-			const uploadData = res?.at(0);
-			if (!uploadData) {
-				setError('Error uploading file');
-				return;
-			}
-
-			const { data, serverError, validationError } = await createPack({
+			await startUpload([newFile], {
 				name,
 				description,
-				url: uploadData.url,
 			});
-
-			if (data?.error) {
-				setError(data.error);
-			} else if (serverError) {
-				setError(serverError);
-			} else if (validationError) {
-				setError(JSON.stringify(validationError));
-			}
 		}
 	};
 
