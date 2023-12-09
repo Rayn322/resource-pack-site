@@ -41,9 +41,6 @@ dependencies:
   next:
     specifier: 14.0.3
     version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
-  next-safe-action:
-    specifier: ^5.2.0
-    version: 5.2.0(next@14.0.3)(react@18.2.0)(zod@3.22.4)
   postcss:
     specifier: 8.4.32
     version: 8.4.32
@@ -3384,19 +3381,6 @@ packages:
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
-    dev: false
-
-  /next-safe-action@5.2.0(next@14.0.3)(react@18.2.0)(zod@3.22.4):
-    resolution: {integrity: sha512-u6fzFLHffpW5PqBcp5eHi62abc4uozRj+8iQofMImCZJ9+Ht2N8w9123UPvU6Zlkit+KCidO6yi4HlLnzTyrHA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      next: '>= 14.0.0'
-      react: '>= 18.2.0'
-      zod: '>= 3.0.0'
-    dependencies:
-      next: 14.0.3(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      zod: 3.22.4
     dev: false
 
   /next-tick@1.1.0:
