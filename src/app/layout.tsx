@@ -15,7 +15,6 @@ function SignInButton() {
 		<>
 			<SignedIn>
 				<UserButton
-					// doesn't show sign in button after signing out so just redirect for now
 					afterSignOutUrl="/"
 					appearance={{
 						elements: {
