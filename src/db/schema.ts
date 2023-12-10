@@ -36,10 +36,12 @@ export const packsRelations = relations(packs, ({ many }) => ({
 
 export const versions = mysqlTable('versions', {
 	id: serial('id').primaryKey(),
+	packId: int('pack_id').notNull(),
+
 	version: varchar('version', { length: 256 }).notNull(),
 	mcVersion: varchar('mc_version', { length: 256 }).notNull(),
+	changelog: text('changelog').notNull(),
 
-	packId: int('pack_id').notNull(),
 	fileKey: varchar('file_key', { length: 256 }).notNull(),
 	downloadUrl: varchar('download_url', { length: 256 }).notNull(),
 });

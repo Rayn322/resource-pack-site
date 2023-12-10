@@ -1,5 +1,5 @@
 import { db } from '@/db/db';
-import { packs } from '@/db/schema';
+import { packs, versions } from '@/db/schema';
 import { currentUser } from '@clerk/nextjs';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UTApi } from 'uploadthing/server';
@@ -14,8 +14,10 @@ export const ourFileRouter = {
 	})
 		.input(
 			z.object({
-				name: z.string().min(1),
-				description: z.string().min(1),
+				packId: z.number(),
+				version: z.string().min(1),
+				mcVersion: z.string().min(1),
+				changelog: z.string().min(1),
 			}),
 		)
 		.middleware(async ({ input }) => {
@@ -27,7 +29,15 @@ export const ourFileRouter = {
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
 			console.log('Upload complete for userId:', metadata.userId);
-			// do stuff
+
+			await db.insert(versions).values({
+				packId: metadata.packId,
+				version: metadata.version,
+				mcVersion: metadata.mcVersion,
+				changelog: metadata.changelog,
+				fileKey: file.key,
+				downloadUrl: file.url,
+			});
 		}),
 } satisfies FileRouter;
 

@@ -1,24 +1,17 @@
-import { db } from '@/db/db';
-import { packs } from '@/db/schema';
-import { clerkClient, currentUser } from '@clerk/nextjs';
+import { getPackWithVersions } from '@/db/queries';
+import { clerkClient } from '@clerk/nextjs';
 import type { User } from '@clerk/nextjs/dist/types/server';
-import { eq } from 'drizzle-orm';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function PackPage({ params }: { params: { id: string } }) {
-	const loggedInUser = await currentUser();
 	const id = parseInt(params.id);
 
 	if (isNaN(id)) {
 		return <div>Invalid pack id</div>;
 	}
 
-	const pack = await db.query.packs.findFirst({
-		where: eq(packs.id, id),
-		with: {
-			versions: true,
-		},
-	});
+	const pack = await getPackWithVersions(id);
 
 	let user: User | undefined;
 
@@ -53,11 +46,21 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 						<p>No Versions</p>
 					) : (
 						pack.versions.map((version) => (
-							<div key={version.id}>
+							<div key={version.id} className="border border-black p-4">
 								<p>Version: {version.version}</p>
+								<p>MC Version: {version.mcVersion}</p>
+								<p>Changelog: {version.changelog}</p>
+								<p>
+									<a href={version.downloadUrl} className="underline">
+										Download
+									</a>
+								</p>
 							</div>
 						))
 					)}
+					<Link href={`/packs/${pack.id}/new`} className="underline">
+						Add Version
+					</Link>
 				</div>
 			)}
 		</>
