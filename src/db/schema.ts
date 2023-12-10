@@ -11,7 +11,7 @@ import {
 export const packs = mysqlTable(
 	'packs',
 	{
-		id: serial('id').primaryKey().autoincrement(),
+		id: serial('id').primaryKey(),
 		name: varchar('name', { length: 256 }).notNull(),
 		description: text('description').notNull(),
 		downloadUrl: varchar('download_url', { length: 256 }).notNull(),
