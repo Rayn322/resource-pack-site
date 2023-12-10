@@ -32,15 +32,21 @@ export default function UploadForm() {
 					<label htmlFor="name" className="w-full text-center">
 						Name
 					</label>
-					<input type="text" id="name" className="rounded" />
+					<input type="text" name="name" id="name" className="rounded" />
 				</div>
 
 				<div className="flex items-center justify-between gap-2">
 					<label htmlFor="description" className="w-full text-center">
 						Description
 					</label>
-					<input type="text" id="description" className="rounded" />
+					<input
+						type="text"
+						name="description"
+						id="description"
+						className="rounded"
+					/>
 				</div>
+
 				<SubmitButton />
 			</form>
 			{error && <p className="text-red-500">{error}</p>}
