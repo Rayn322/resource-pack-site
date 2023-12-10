@@ -17,7 +17,7 @@
 		"@planetscale/database": "^1.11.0",
 		"@t3-oss/env-nextjs": "^0.7.1",
 		"@types/node": "20.10.4",
-		"@types/react": "18.2.42",
+		"@types/react": "18.2.43",
 		"@types/react-dom": "18.2.17",
 		"@uploadthing/react": "^6.0.2",
 		"autoprefixer": "10.4.16",
