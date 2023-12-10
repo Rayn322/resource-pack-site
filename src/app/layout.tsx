@@ -64,10 +64,10 @@ export default function RootLayout({
 								Packs
 							</Link>
 							<Link
-								href={'/upload'}
+								href={'/create'}
 								className="rounded-lg border-2 border-white p-2"
 							>
-								Upload
+								Create
 							</Link>
 							<SignInButton />
 						</div>

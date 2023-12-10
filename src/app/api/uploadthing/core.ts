@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 const f = createUploadthing();
 
+// TODO: overhaul for adding new versions when the time comes
 export const ourFileRouter = {
 	packUploader: f({
 		'application/zip': { maxFileCount: 1, maxFileSize: '64MB' },
@@ -26,15 +27,7 @@ export const ourFileRouter = {
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
 			console.log('Upload complete for userId:', metadata.userId);
-
-			const query = await db.insert(packs).values({
-				name: metadata.name,
-				description: metadata.description,
-				userId: metadata.userId,
-				downloadUrl: file.url,
-			});
-
-			return { id: query.insertId };
+			// do stuff
 		}),
 } satisfies FileRouter;
 

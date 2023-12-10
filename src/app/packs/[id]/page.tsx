@@ -4,7 +4,6 @@ import { clerkClient, currentUser } from '@clerk/nextjs';
 import type { User } from '@clerk/nextjs/dist/types/server';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
-import DeleteButton from './DeleteButton';
 
 export default async function PackPage({ params }: { params: { id: string } }) {
 	const loggedInUser = await currentUser();
@@ -16,6 +15,9 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 
 	const pack = await db.query.packs.findFirst({
 		where: eq(packs.id, id),
+		with: {
+			versions: true,
+		},
 	});
 
 	let user: User | undefined;
@@ -47,13 +49,15 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 							/>
 						</>
 					)}
-					<a
-						href={pack.downloadUrl}
-						className="mt-2 inline-block rounded border-2 border-emerald-500 p-2"
-					>
-						Download
-					</a>
-					{loggedInUser?.id === pack.userId && <DeleteButton id={pack.id} />}
+					{pack.versions.length === 0 ? (
+						<p>No Versions</p>
+					) : (
+						pack.versions.map((version) => (
+							<div key={version.id}>
+								<p>Version: {version.version}</p>
+							</div>
+						))
+					)}
 				</div>
 			)}
 		</>
