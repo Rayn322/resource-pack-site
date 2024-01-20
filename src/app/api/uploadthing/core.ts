@@ -7,7 +7,6 @@ import { z } from 'zod';
 
 const f = createUploadthing();
 
-// TODO: overhaul for adding new versions when the time comes
 export const ourFileRouter = {
 	packUploader: f({
 		'application/zip': { maxFileCount: 1, maxFileSize: '64MB' },
