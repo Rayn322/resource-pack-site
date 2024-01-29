@@ -42,22 +42,24 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 							/>
 						</>
 					)}
-					{pack.versions.length === 0 ? (
-						<p>No Versions</p>
-					) : (
-						pack.versions.map((version) => (
-							<div key={version.id} className="border border-black p-4">
-								<p>Version: {version.version}</p>
-								<p>MC Version: {version.mcVersion}</p>
-								<p>Changelog: {version.changelog}</p>
-								<p>
-									<a href={version.downloadUrl} className="underline">
-										Download
-									</a>
-								</p>
-							</div>
-						))
-					)}
+					<div className="divide-y divide-black border border-black">
+						{pack.versions.length === 0 ? (
+							<p>No Versions</p>
+						) : (
+							pack.versions.map((version) => (
+								<div key={version.id} className="p-4">
+									<p>Version: {version.version}</p>
+									<p>MC Version: {version.mcVersion}</p>
+									<p>Changelog: {version.changelog}</p>
+									<p>
+										<a href={version.downloadUrl} className="underline">
+											Download
+										</a>
+									</p>
+								</div>
+							))
+						)}
+					</div>
 					<Link href={`/packs/${pack.id}/new`} className="underline">
 						Add Version
 					</Link>
