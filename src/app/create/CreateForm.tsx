@@ -11,12 +11,12 @@ export default function UploadForm() {
 		const name = formData.get('name') as string;
 		const description = formData.get('description') as string;
 
-		const { validationError } = await createPack({ name, description });
+		const { validationErrors } = await createPack({ name, description });
 
-		if (validationError) {
+		if (validationErrors) {
 			setError(
-				validationError.name?.at(0) ||
-					validationError.description?.at(0) ||
+				validationErrors.name?.at(0) ||
+					validationErrors.description?.at(0) ||
 					null,
 			);
 		}
