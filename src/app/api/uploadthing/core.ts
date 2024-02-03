@@ -1,8 +1,9 @@
 import { db } from '@/db/db';
-import { packs, versions } from '@/db/schema';
+import { versions } from '@/db/schema';
 import { currentUser } from '@clerk/nextjs';
+import { revalidatePath } from 'next/cache';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { UTApi } from 'uploadthing/server';
+import { UTApi, UploadThingError } from 'uploadthing/server';
 import { z } from 'zod';
 
 const f = createUploadthing();
@@ -22,11 +23,11 @@ export const ourFileRouter = {
 		.middleware(async ({ input }) => {
 			const user = await currentUser();
 
-			if (!user) throw new Error('Unauthorized');
+			if (!user) throw new UploadThingError('Unauthorized');
 
 			return { userId: user.id, ...input };
 		})
-		.onUploadComplete(async ({ metadata, file }) => {
+		.onUploadComplete(async ({ file, metadata }) => {
 			console.log('Upload complete for userId:', metadata.userId);
 
 			await db.insert(versions).values({
@@ -37,6 +38,8 @@ export const ourFileRouter = {
 				fileKey: file.key,
 				downloadUrl: file.url,
 			});
+
+			revalidatePath(`/packs/${metadata.packId}`);
 		}),
 } satisfies FileRouter;
 
