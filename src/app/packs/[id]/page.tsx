@@ -65,9 +65,11 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 							))
 						)}
 					</div>
-					<Link href={`/packs/${pack.id}/new`} className="underline">
-						Add Version
-					</Link>
+					{userId === pack.userId && (
+						<Link href={`/packs/${pack.id}/new`} className="underline">
+							Add Version
+						</Link>
+					)}
 				</div>
 			)}
 		</>
