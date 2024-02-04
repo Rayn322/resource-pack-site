@@ -1,6 +1,6 @@
 import { db } from '@/db/db';
 import { versions } from '@/db/schema';
-import { currentUser } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UTApi, UploadThingError } from 'uploadthing/server';
@@ -21,11 +21,11 @@ export const ourFileRouter = {
 			}),
 		)
 		.middleware(async ({ input }) => {
-			const user = await currentUser();
+			const { userId } = auth();
 
-			if (!user) throw new UploadThingError('Unauthorized');
+			if (!userId) throw new UploadThingError('Unauthorized');
 
-			return { userId: user.id, ...input };
+			return { userId: userId, ...input };
 		})
 		.onUploadComplete(async ({ file, metadata }) => {
 			console.log('Upload complete for userId:', metadata.userId);
