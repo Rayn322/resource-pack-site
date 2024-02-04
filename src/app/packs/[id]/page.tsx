@@ -1,8 +1,9 @@
 import { getPackWithVersions } from '@/db/queries';
-import { clerkClient } from '@clerk/nextjs';
+import { auth, clerkClient } from '@clerk/nextjs';
 import type { User } from '@clerk/nextjs/dist/types/server';
 import Image from 'next/image';
 import Link from 'next/link';
+import DeleteButton from './DeleteButton';
 
 export default async function PackPage({ params }: { params: { id: string } }) {
 	const id = parseInt(params.id);
@@ -12,6 +13,7 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 	}
 
 	const pack = await getPackWithVersions(id);
+	const { userId } = auth();
 
 	let user: User | undefined;
 
@@ -56,6 +58,9 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 											Download
 										</a>
 									</p>
+									{userId === pack.userId && (
+										<DeleteButton packId={pack.id} versionId={version.id} />
+									)}
 								</div>
 							))
 						)}

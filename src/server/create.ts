@@ -2,10 +2,11 @@
 
 import { db } from '@/db/db';
 import { packs } from '@/db/schema';
-import { currentUser } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { action } from './safe-action';
+import { revalidatePath } from 'next/cache';
 
 const schema = z.object({
 	name: z.string().min(1, 'Name is required'),
@@ -13,17 +14,18 @@ const schema = z.object({
 });
 
 export const createPack = action(schema, async ({ name, description }) => {
-	const user = await currentUser();
+	const { userId } = auth();
 
-	if (!user) {
+	if (!userId) {
 		return { error: 'Not logged in' };
 	}
 
 	const { insertId } = await db.insert(packs).values({
 		name,
 		description,
-		userId: user.id,
+		userId,
 	});
 
+	revalidatePath(`/packs/${insertId}`);
 	redirect(`/packs/${insertId}`);
 });

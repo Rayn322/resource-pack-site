@@ -1,35 +1,45 @@
-// 'use server';
+'use server';
 
-// import { utapi } from '@/app/api/uploadthing/core';
-// import { db } from '@/db/db';
-// import { packs } from '@/db/schema';
-// import { eq } from 'drizzle-orm';
-// import { redirect } from 'next/navigation';
+import { utapi } from '@/app/api/uploadthing/core';
+import { db } from '@/db/db';
+import { packs, versions } from '@/db/schema';
+import { auth } from '@clerk/nextjs';
+import { eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+import { action } from './safe-action';
 
-// export async function deletePack(id: number) {
-// 	const pack = await db.query.packs.findFirst({
-// 		where: eq(packs.id, id),
-// 	});
+const schema = z.object({
+	packId: z.number(),
+	versionId: z.number(),
+});
 
-// 	if (pack) {
-// 		const url = new URL(pack.downloadUrl);
-// 		const key = url.pathname.split('/').at(-1);
+export const deleteVersion = action(schema, async ({ packId, versionId }) => {
+	const { userId } = auth();
 
-// 		if (key) {
-// 			const { success } = await utapi.deleteFiles(key);
-// 			if (success) {
-// 				const result = await db.delete(packs).where(eq(packs.id, id));
-// 			}
-// 			console.log('Deleted pack:', pack.downloadUrl, 'success:', success);
-// 		}
-// 	}
+	if (!userId) {
+		return;
+	}
 
-// 	const result = await db.query.versions.findFirst({
-// 		with: {
-// 			pack: true,
-// 			file: true,
-// 		},
-// 	});
+	const pack = await db.query.packs.findFirst({
+		where: eq(packs.id, packId),
+		with: { versions: true },
+	});
 
-// 	redirect('/packs');
-// }
+	if (userId != pack?.userId) {
+		return;
+	}
+
+	const version = pack.versions.find((v) => v.id === versionId);
+
+	if (!version) {
+		return;
+	}
+
+	const success = await utapi.deleteFiles([version.fileKey]);
+
+	if (success) {
+		await db.delete(versions).where(eq(versions.id, versionId));
+		revalidatePath(`/packs/${pack.id}`);
+	}
+});
