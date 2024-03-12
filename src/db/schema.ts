@@ -1,6 +1,5 @@
 import { relations, sql } from 'drizzle-orm';
 import {
-	index,
 	int,
 	mysqlTable,
 	serial,
@@ -9,26 +8,20 @@ import {
 	varchar,
 } from 'drizzle-orm/mysql-core';
 
-export const packs = mysqlTable(
-	'packs',
-	{
-		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).notNull(),
-		description: text('description').notNull(),
-		userId: varchar('user_id', { length: 256 }).notNull(),
-		// use defaultCurrentTimestamp() eventually https://github.com/drizzle-team/drizzle-orm/issues/921
-		createdAt: timestamp('created_at')
-			.default(sql`CURRENT_TIMESTAMP`)
-			.notNull(),
-		updatedAt: timestamp('updated_at')
-			.default(sql`CURRENT_TIMESTAMP`)
-			.onUpdateNow()
-			.notNull(),
-	},
-	(table) => ({
-		userIdIdx: index('user_id_idx').on(table.userId),
-	}),
-);
+export const packs = mysqlTable('packs', {
+	id: serial('id').primaryKey(),
+	name: varchar('name', { length: 256 }).notNull(),
+	description: text('description').notNull(),
+	userId: varchar('user_id', { length: 256 }).notNull(),
+	// use defaultCurrentTimestamp() eventually https://github.com/drizzle-team/drizzle-orm/issues/921
+	createdAt: timestamp('created_at')
+		.default(sql`CURRENT_TIMESTAMP`)
+		.notNull(),
+	updatedAt: timestamp('updated_at')
+		.default(sql`CURRENT_TIMESTAMP`)
+		.onUpdateNow()
+		.notNull(),
+});
 
 export const packsRelations = relations(packs, ({ many }) => ({
 	versions: many(versions),
