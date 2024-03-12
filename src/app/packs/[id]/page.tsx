@@ -1,6 +1,6 @@
 import { getPackWithVersions } from '@/db/queries';
 import { auth, clerkClient } from '@clerk/nextjs';
-import type { User } from '@clerk/nextjs/dist/types/server';
+import type { User } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
@@ -30,7 +30,7 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 				<div>
 					<p>Name: {pack.name}</p>
 					<p>Description: {pack.description}</p>
-					<p>Date: {toRelativeTime(pack.createdAt)}</p>
+					<p>Date: {JSON.stringify(pack.createdAt)}</p>
 					{user && (
 						<>
 							<p>Uploaded by: {user.firstName}</p>

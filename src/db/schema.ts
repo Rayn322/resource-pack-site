@@ -1,28 +1,21 @@
 import { relations, sql } from 'drizzle-orm';
-import {
-	index,
-	int,
-	mysqlTable,
-	serial,
-	text,
-	timestamp,
-	varchar,
-} from 'drizzle-orm/mysql-core';
+import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const packs = mysqlTable(
+export const packs = sqliteTable(
 	'packs',
 	{
-		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).notNull(),
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		name: text('name', { length: 256 }).notNull(),
 		description: text('description').notNull(),
-		userId: varchar('user_id', { length: 256 }).notNull(),
+		userId: text('user_id', { length: 256 }).notNull(),
 		// use defaultCurrentTimestamp() eventually https://github.com/drizzle-team/drizzle-orm/issues/921
-		createdAt: timestamp('created_at')
+		createdAt: integer('created_at', { mode: 'timestamp' })
 			.default(sql`CURRENT_TIMESTAMP`)
 			.notNull(),
-		updatedAt: timestamp('updated_at')
+		updatedAt: integer('updated_at', { mode: 'timestamp' })
 			.default(sql`CURRENT_TIMESTAMP`)
-			.onUpdateNow()
+			// .onUpdate(sql`CURRENT_TIMESTAMP`)
+			// ^ using a sqlite trigger
 			.notNull(),
 	},
 	(table) => ({
@@ -34,16 +27,16 @@ export const packsRelations = relations(packs, ({ many }) => ({
 	versions: many(versions),
 }));
 
-export const versions = mysqlTable('versions', {
-	id: serial('id').primaryKey(),
-	packId: int('pack_id').notNull(),
+export const versions = sqliteTable('versions', {
+	id: integer('id').primaryKey({ autoIncrement: true }),
+	packId: integer('pack_id').notNull(),
 
-	version: varchar('version', { length: 256 }).notNull(),
-	mcVersion: varchar('mc_version', { length: 256 }).notNull(),
+	version: text('version', { length: 256 }).notNull(),
+	mcVersion: text('mc_version', { length: 256 }).notNull(),
 	changelog: text('changelog').notNull(),
 
-	fileKey: varchar('file_key', { length: 256 }).notNull(),
-	downloadUrl: varchar('download_url', { length: 256 }).notNull(),
+	fileKey: text('file_key', { length: 256 }).notNull(),
+	downloadUrl: text('download_url', { length: 256 }).notNull(),
 });
 
 export const versionsRelations = relations(versions, ({ one }) => ({

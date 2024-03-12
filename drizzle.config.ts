@@ -1,10 +1,11 @@
 import type { Config } from 'drizzle-kit';
-import { env } from '@/env.mjs';
+import { env } from '@/env';
 
 export default {
 	schema: './src/db/schema.ts',
-	driver: 'mysql2',
+	driver: 'turso',
 	dbCredentials: {
-		uri: env.DATABASE_URL,
+		url: env.DATABASE_URL,
+		authToken: env.DATABASE_TOKEN,
 	},
 } satisfies Config;

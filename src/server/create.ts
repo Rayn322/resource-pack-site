@@ -20,12 +20,15 @@ export const createPack = action(schema, async ({ name, description }) => {
 		return { error: 'Not logged in' };
 	}
 
-	const { insertId } = await db.insert(packs).values({
-		name,
-		description,
-		userId,
-	});
+	const [data] = await db
+		.insert(packs)
+		.values({
+			name,
+			description,
+			userId,
+		})
+		.returning({ insertedId: packs.id });
 
-	revalidatePath(`/packs/${insertId}`);
-	redirect(`/packs/${insertId}`);
+	revalidatePath(`/packs/${data?.insertedId}`);
+	redirect(`/packs/${data?.insertedId}`);
 });

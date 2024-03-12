@@ -3,7 +3,7 @@ import { versions } from '@/db/schema';
 import { auth } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { UTApi, UploadThingError } from 'uploadthing/server';
+import { UploadThingError, UTApi } from 'uploadthing/server';
 import { z } from 'zod';
 
 const f = createUploadthing();
