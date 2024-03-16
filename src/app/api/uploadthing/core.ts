@@ -39,7 +39,11 @@ export const ourFileRouter = {
 				downloadUrl: file.url,
 			});
 
-			revalidatePath(`/packs/${metadata.packId}`);
+			// console.log('revalidated', `/packs/${metadata.packId}`);
+			console.log('revalidated', '/packs/[id]');
+
+			// revalidatePath(`/packs/${metadata.packId}`, 'page');
+			revalidatePath('/packs/[id]', 'page');
 		}),
 } satisfies FileRouter;
 
