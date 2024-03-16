@@ -8,12 +8,11 @@ export const packs = sqliteTable(
 		name: text('name', { length: 256 }).notNull(),
 		description: text('description').notNull(),
 		userId: text('user_id', { length: 256 }).notNull(),
-		// use defaultCurrentTimestamp() eventually https://github.com/drizzle-team/drizzle-orm/issues/921
 		createdAt: integer('created_at', { mode: 'timestamp' })
-			.default(sql`CURRENT_TIMESTAMP`)
+			.default(sql`(unixepoch())`)
 			.notNull(),
 		updatedAt: integer('updated_at', { mode: 'timestamp' })
-			.default(sql`CURRENT_TIMESTAMP`)
+			.default(sql`(unixepoch())`)
 			// .onUpdate(sql`CURRENT_TIMESTAMP`)
 			// ^ using a sqlite trigger
 			.notNull(),

@@ -30,7 +30,7 @@ export default async function PackPage({ params }: { params: { id: string } }) {
 				<div>
 					<p>Name: {pack.name}</p>
 					<p>Description: {pack.description}</p>
-					<p>Date: {JSON.stringify(pack.createdAt)}</p>
+					<p>Date: {toRelativeTime(pack.createdAt)}</p>
 					{user && (
 						<>
 							<p>Uploaded by: {user.firstName}</p>
