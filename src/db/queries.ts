@@ -10,17 +10,5 @@ export async function getPackWithVersions(id: number) {
 		},
 	});
 
-	console.log('RAN WITH DATA', data);
-	console.log(new Date().toISOString());
-
 	return data;
 }
-
-// export const getPackWithVersions = cache(async (id: number) => {
-// 	return await db.query.packs.findFirst({
-// 		where: eq(packs.id, id),
-// 		with: {
-// 			versions: true,
-// 		},
-// 	});
-// });

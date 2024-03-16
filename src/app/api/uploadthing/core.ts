@@ -1,9 +1,8 @@
 import { db } from '@/db/db';
 import { versions } from '@/db/schema';
 import { auth } from '@clerk/nextjs';
-import { revalidatePath } from 'next/cache';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { UploadThingError, UTApi } from 'uploadthing/server';
+import { UTApi, UploadThingError } from 'uploadthing/server';
 import { z } from 'zod';
 
 const f = createUploadthing();
@@ -28,8 +27,6 @@ export const ourFileRouter = {
 			return { userId: userId, ...input };
 		})
 		.onUploadComplete(async ({ file, metadata }) => {
-			console.log('Upload complete for userId:', metadata.userId);
-
 			await db.insert(versions).values({
 				packId: metadata.packId,
 				version: metadata.version,
@@ -38,12 +35,6 @@ export const ourFileRouter = {
 				fileKey: file.key,
 				downloadUrl: file.url,
 			});
-
-			// console.log('revalidated', `/packs/${metadata.packId}`);
-			console.log('revalidated', '/packs/[id]');
-
-			// revalidatePath(`/packs/${metadata.packId}`, 'page');
-			revalidatePath('/packs/[id]', 'page');
 		}),
 } satisfies FileRouter;
 

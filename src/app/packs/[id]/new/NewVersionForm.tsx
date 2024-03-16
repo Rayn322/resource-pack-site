@@ -16,6 +16,7 @@ export default function UploadForm({ packId }: { packId: number }) {
 			}
 
 			router.push(`/packs/${packId}`);
+			router.refresh();
 		},
 	});
 
