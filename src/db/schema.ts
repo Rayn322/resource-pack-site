@@ -1,20 +1,25 @@
-import { relations, sql } from 'drizzle-orm';
-import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { relations } from 'drizzle-orm';
+import {
+	index,
+	integer,
+	pgTable,
+	serial,
+	text,
+	timestamp,
+	varchar,
+} from 'drizzle-orm/pg-core';
 
-export const packs = sqliteTable(
+export const packs = pgTable(
 	'packs',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
-		name: text('name', { length: 256 }).notNull(),
-		description: text('description').notNull(),
-		userId: text('user_id', { length: 256 }).notNull(),
-		createdAt: integer('created_at', { mode: 'timestamp' })
-			.default(sql`(unixepoch())`)
-			.notNull(),
-		updatedAt: integer('updated_at', { mode: 'timestamp' })
-			.default(sql`(unixepoch())`)
-			// .onUpdate(sql`CURRENT_TIMESTAMP`)
-			// ^ using a sqlite trigger
+		id: serial('id').primaryKey(),
+		name: varchar('name', { length: 256 }).notNull(),
+		description: varchar('description').notNull(),
+		userId: varchar('user_id', { length: 256 }).notNull(),
+		createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
+		updatedAt: timestamp('updated_at', { mode: 'date' })
+			.defaultNow()
+			.$onUpdate(() => new Date())
 			.notNull(),
 	},
 	(table) => ({
@@ -26,16 +31,16 @@ export const packsRelations = relations(packs, ({ many }) => ({
 	versions: many(versions),
 }));
 
-export const versions = sqliteTable('versions', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
+export const versions = pgTable('versions', {
+	id: serial('id').primaryKey(),
 	packId: integer('pack_id').notNull(),
 
-	version: text('version', { length: 256 }).notNull(),
-	mcVersion: text('mc_version', { length: 256 }).notNull(),
+	version: varchar('version', { length: 256 }).notNull(),
+	mcVersion: varchar('mc_version', { length: 256 }).notNull(),
 	changelog: text('changelog').notNull(),
 
-	fileKey: text('file_key', { length: 256 }).notNull(),
-	downloadUrl: text('download_url', { length: 256 }).notNull(),
+	fileKey: varchar('file_key', { length: 256 }).notNull(),
+	downloadUrl: varchar('download_url', { length: 256 }).notNull(),
 });
 
 export const versionsRelations = relations(versions, ({ one }) => ({
