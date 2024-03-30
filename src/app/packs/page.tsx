@@ -1,9 +1,8 @@
 import Card from '@/components/Card';
 import { db } from '@/db/db';
-import { packs } from '@/db/schema';
 
 export default async function Packs() {
-	const stuff = await db.select().from(packs).limit(20);
+	const stuff = await db.query.packs.findMany({ limit: 20 });
 
 	return (
 		<>
