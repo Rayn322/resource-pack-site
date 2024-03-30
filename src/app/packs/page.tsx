@@ -3,6 +3,7 @@ import { db } from '@/db/db';
 
 export default async function Packs() {
 	const stuff = await db.query.packs.findMany({ limit: 20 });
+	console.log('found ', stuff.length, ' packs');
 
 	return (
 		<>
