@@ -3,10 +3,10 @@
 import { db } from '@/db/db';
 import { packs } from '@/db/schema';
 import { auth } from '@clerk/nextjs';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { action } from './safe-action';
-import { revalidatePath } from 'next/cache';
 
 const schema = z.object({
 	name: z.string().min(1, 'Name is required'),
@@ -29,6 +29,7 @@ export const createPack = action(schema, async ({ name, description }) => {
 		})
 		.returning({ insertedId: packs.id });
 
+	revalidatePath('/packs');
 	revalidatePath(`/packs/${data?.insertedId}`);
 	redirect(`/packs/${data?.insertedId}`);
 });
