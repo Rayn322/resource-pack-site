@@ -1,6 +1,6 @@
 import { db } from '@/db/db';
 import { versions } from '@/db/schema';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UTApi, UploadThingError } from 'uploadthing/server';
 import { z } from 'zod';

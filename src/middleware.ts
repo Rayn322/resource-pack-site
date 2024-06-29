@@ -1,6 +1,17 @@
-import { authMiddleware } from '@clerk/nextjs';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
+const isProtectedRoute = createRouteMatcher(['/create(.*)']);
+
+export default clerkMiddleware((auth, request) => {
+	if (isProtectedRoute(request)) {
+		auth().protect();
+	}
+
+	return NextResponse.next();
+});
+
+/*
 export default authMiddleware({
 	publicRoutes: [
 		'/',
@@ -10,15 +21,11 @@ export default authMiddleware({
 		'/sign-up',
 		'/api/(.*)',
 	],
-	afterAuth: (auth, req) => {
-		if (!auth.sessionId && !auth.isPublicRoute) {
-			const url = req.nextUrl.clone();
-			url.pathname = '/sign-in';
-			return NextResponse.redirect(url);
-		}
-	},
-});
+	*/
 
 export const config = {
-	matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+	// The following matcher runs middleware on all routes
+	// except static assets.
+	// stolen from Clerk docs
+	matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };
