@@ -1,4 +1,4 @@
-import { getPackWithVersions } from '@/db/queries';
+import { getLatestDownloadUrl } from '@/db/queries';
 import { NextResponse } from 'next/server';
 
 export async function GET(
@@ -14,11 +14,11 @@ export async function GET(
 		);
 	}
 
-	const pack = await getPackWithVersions(id);
+	const url = await getLatestDownloadUrl(id);
 
-	if (!pack) {
-		return NextResponse.json({ error: 'Pack not found' }, { status: 404 });
+	if (!url) {
+		return NextResponse.json({ error: 'Download not found' }, { status: 404 });
 	}
 
-	return NextResponse.json(pack);
+	return NextResponse.redirect(url);
 }

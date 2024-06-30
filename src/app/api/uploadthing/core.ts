@@ -1,6 +1,7 @@
 import { db } from '@/db/db';
 import { versions } from '@/db/schema';
 import { auth } from '@clerk/nextjs/server';
+import { revalidatePath } from 'next/cache';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UTApi, UploadThingError } from 'uploadthing/server';
 import { z } from 'zod';
@@ -35,6 +36,10 @@ export const ourFileRouter = {
 				fileKey: file.key,
 				downloadUrl: file.url,
 			});
+
+			revalidatePath(`/packs/${metadata.packId}`);
+			revalidatePath(`/api/pack/${metadata.packId}`);
+			revalidatePath(`/api/pack/${metadata.packId}/download`);
 		}),
 } satisfies FileRouter;
 
