@@ -1,6 +1,7 @@
 'use client';
 
 import { createPack } from '@/server/create';
+import { flattenValidationErrors } from 'next-safe-action';
 import { useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
@@ -11,12 +12,14 @@ export default function UploadForm() {
 		const name = formData.get('name') as string;
 		const description = formData.get('description') as string;
 
-		const { validationErrors } = await createPack({ name, description });
+		const result = await createPack({ name, description });
 
-		if (validationErrors) {
+		if (result?.validationErrors) {
+			const flattened = flattenValidationErrors(result?.validationErrors);
+
 			setError(
-				validationErrors.name?.at(0) ||
-					validationErrors.description?.at(0) ||
+				flattened.fieldErrors.name?.at(0) ||
+					flattened.fieldErrors.description?.at(0) ||
 					null,
 			);
 		}
