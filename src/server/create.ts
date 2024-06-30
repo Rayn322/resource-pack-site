@@ -2,7 +2,6 @@
 
 import { db } from '@/db/db';
 import { packs } from '@/db/schema';
-import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -15,13 +14,7 @@ export const createPack = actionClient
 			description: z.string().min(1, 'Description is required'),
 		}),
 	)
-	.action(async ({ parsedInput: { name, description } }) => {
-		const { userId } = auth();
-
-		if (!userId) {
-			return { error: 'Not logged in' };
-		}
-
+	.action(async ({ parsedInput: { name, description }, ctx: { userId } }) => {
 		const [data] = await db
 			.insert(packs)
 			.values({
@@ -33,5 +26,7 @@ export const createPack = actionClient
 
 		revalidatePath('/packs');
 		revalidatePath(`/packs/${data?.insertedId}`);
+		revalidatePath(`/api/pack/${data?.insertedId}`);
+
 		redirect(`/packs/${data?.insertedId}`);
 	});

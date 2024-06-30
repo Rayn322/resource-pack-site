@@ -3,7 +3,6 @@
 import { utapi } from '@/app/api/uploadthing/core';
 import { db } from '@/db/db';
 import { packs, versions } from '@/db/schema';
-import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -16,13 +15,7 @@ export const deleteVersion = actionClient
 			versionId: z.number(),
 		}),
 	)
-	.action(async ({ parsedInput: { packId, versionId } }) => {
-		const { userId } = auth();
-
-		if (!userId) {
-			return;
-		}
-
+	.action(async ({ parsedInput: { packId, versionId }, ctx: { userId } }) => {
 		const pack = await db.query.packs.findFirst({
 			where: eq(packs.id, packId),
 			with: { versions: true },
@@ -43,5 +36,7 @@ export const deleteVersion = actionClient
 		if (success) {
 			await db.delete(versions).where(eq(versions.id, versionId));
 			revalidatePath(`/packs/${pack.id}`);
+			revalidatePath(`/api/pack/${pack.id}`);
+			revalidatePath(`/api/pack/${packId}/download`);
 		}
 	});

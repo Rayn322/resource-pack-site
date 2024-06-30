@@ -1,14 +1,23 @@
 import { auth } from '@clerk/nextjs/server';
-import { createSafeActionClient } from 'next-safe-action';
+import {
+	DEFAULT_SERVER_ERROR_MESSAGE,
+	createSafeActionClient,
+} from 'next-safe-action';
 
-export const actionClient = createSafeActionClient();
+export const actionClient = createSafeActionClient({
+	handleReturnedServerError(e) {
+		if (e instanceof Error) {
+			return e.message;
+		}
 
-// export const authActionClient = actionClient.use(async ({ next, ctx }) => {
-// 	const { userId } = auth();
+		return DEFAULT_SERVER_ERROR_MESSAGE;
+	},
+}).use(async ({ next }) => {
+	const { userId } = auth();
 
-// 	if (!userId) {
-// 		return { error: 'Not logged in' };
-// 	}
+	if (!userId) {
+		throw new Error('User is not authenticated');
+	}
 
-// 	return next({ ctx: userId });
-// });
+	return next({ ctx: { userId } });
+});
