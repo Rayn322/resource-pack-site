@@ -1,7 +1,7 @@
 import { Pack } from '@/db/schema';
 import packPng from '@/static/pack.png';
-import { clerkClient } from '@clerk/nextjs/server';
 import type { User } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
 
