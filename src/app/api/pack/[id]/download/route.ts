@@ -17,8 +17,13 @@ export async function GET(
 	const url = await getLatestDownloadUrl(id);
 
 	if (!url) {
-		return NextResponse.json({ error: 'Download not found' }, { status: 404 });
+		return NextResponse.json(
+			{ error: 'Download not found', url: null },
+			{ status: 404 },
+		);
 	}
 
-	return NextResponse.redirect(url);
+	return NextResponse.json({ error: null, url }, { status: 200 });
+
+	// return NextResponse.redirect(url);
 }
